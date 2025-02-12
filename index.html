@@ -11,11 +11,10 @@
             background-color: #f4f4f9;
             display: flex;
             flex-direction: column;
-            align-items: center;x
+            align-items: center;
         }
         .container {
             width: 80%;
-            height: 75%;
             background-color: white;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
@@ -50,7 +49,7 @@
             font-size: 18px;
             line-height: 1.6;
         }
-        .page-number {
+        .page {
             margin-top: 10px;
             font-size: 14px;
             color: gray;
@@ -61,7 +60,6 @@
             overflow-x: auto;
             white-space: nowrap;
             display: flex;
-            justify-content: start;
             align-items: center;
             background-color: #eee;
             border-top: 2px solid #ddd;
@@ -79,6 +77,8 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.3s, background-color 0.3s;
+            padding: 10px;
+            border-radius: 8px;
         }
         .timeline-event:hover {
             transform: scale(1.1);
@@ -87,7 +87,6 @@
         .timeline-event.active {
             background-color: #4CAF50;
             color: white;
-            border-radius: 8px;
         }
         .timeline-event-date {
             font-weight: bold;
@@ -104,9 +103,11 @@
         <h1 id="title">Event Title</h1>
         <div class="content">
             <img id="image" src="" alt="image">
-            <iframe id="embed" src="embed"></iframe>
+            <iframe id="embed" src=""></iframe>
+            <p id="date"></p>
+
         </div>
-        <p id="description">description</p>
+        <p id="description">Description</p>
         <div class="page" id="page">Page 1 of 36</div>
     </div>
 
@@ -118,7 +119,7 @@
 
     <script>
         const events = [
-            { title: "Reign of King Louis XIV", date: "1643-1715", description: "Louis XIV centralized power in France and exemplified absolute monarchy.", image: "./pictures/LouisXIVofFrance.jpg", embed: "https://www.britannica.com/biography/Louis-IV-king-of-France" },
+        { title: "Reign of King Louis XIV", date: "1643-1715", description: "Louis XIV centralized power in France and exemplified absolute monarchy.", image: "./pictures/LouisXIVofFrance.jpg", embed: "https://www.britannica.com/biography/Louis-IV-king-of-France" },
             { title: "Seven Years' War", date: "1756-1763", description: "A global conflict that reshaped colonial empires, strengthening British dominance in North America.", image: "./pictures/SevenYearsWar.jpg", embed: "https://en.wikipedia.org/wiki/Seven_Years%27_War" },
             { title: "Invention of the Steam Engine", date: "1776", description: "The steam engine powered factories, ships, and railways, becoming a cornerstone of industrialization.", image: "./pictures/SteamEngine.jpg", embed: "https://en.wikipedia.org/wiki/Steam_engine" },
             { title: "Invention of the Spinning Jenny", date: "1764", description: "James Hargreaves' Spinning Jenny revolutionized textile production.", image: "./pictures/SpinningJenny.jpg", embed: "https://en.wikipedia.org/wiki/Spinning_jenny" },
@@ -137,7 +138,7 @@
             { title: "Treaty of Nanking", date: "1842", description: "Ended the First Opium War, ceding Hong Kong to Britain and opening Chinese ports to trade.", image: "pictures/TreatyOfNanjing.jpg", embed: "https://en.wikipedia.org/wiki/Treaty_of_Nanking" },
             { title: "The Great Famine (The Potato Famine/The Great Hunger)", date: "1845-1852", description: "A devastating famine in Ireland caused by potato blight, leading to mass starvation and emigration.", image: "pictures/GreatFamine.jpg", embed: "https://en.wikipedia.org/wiki/Great_Famine_(Ireland)" },
             { title: "Emancipation of Russian Serfs", date: "1861", description: "Tsar Alexander II liberated serfs in a move to modernize Russian society.", image: "./pictures/RussianSerfs.jpg", embed: "https://en.wikipedia.org/wiki/Emancipation_reform_of_1861" },
-            { title: "Transcontinental Railroad", date: "1869", description: "Connected the east and west coasts of the United States, revolutionizing transportation.", image: "pictures/TranscontinentalRailroad.jpg", embed: "https://en.wikipedia.org/wiki/First_Transcontinental_Railroad" }
+            { title: "Transcontinental Railroad", date: "1869", description: "Connected the east and west coasts of the United States, revolutionizing transportation.", image: "pictures/TranscontinentalRailroad.jpg", embed: "https://en.wikipedia.org/wiki/First_Transcontinental_Railroad" },
             { title: "Origin of Species Published", date: "1859", description: "Charles Darwin introduced the theory of evolution by natural selection, revolutionizing biology.", image: "./pictures/OriginOfSpecies.jpg", embed: "https://en.wikipedia.org/wiki/On_the_Origin_of_Species" },
             { title: "British Take Control of India", date: "1858", description: "Following the Sepoy Rebellion, the British Crown assumed direct control of India.", image: "./pictures/BritishIndia.jpg", embed: "https://en.wikipedia.org/wiki/British_Raj" },
             { title: "Fall of British East India Company", date: "1858", description: "British Crown assumed direct control of India, instead of the British East India Company.", image: "pictures/BritishEastIndiaFall.jpg", embed: "https://en.wikipedia.org/wiki/British_Raj" },
@@ -156,18 +157,19 @@
             { title: "Battle of Waterloo", date: "1815", description: "Napoleon’s final defeat ended his rule and reshaped Europe’s political landscape.", image: "./pictures/Waterloo.jpg", embed: "https://en.wikipedia.org/wiki/Battle_of_Waterloo" },
             { title: "Assembly Line", date: "1913", description: "Henry Ford’s assembly line revolutionized manufacturing, making goods more affordable.", image: "./pictures/AssemblyLine.jpg", embed: "https://en.wikipedia.org/wiki/Assembly_line" }
 
-            
         ];
 
         let currentIndex = 0;
 
         function updateEvent() {
             const { title, description, image, embed, date } = events[currentIndex];
-            document.getElementById('event-title').innerText = title;
-            document.getElementById('event-description').innerText = description;
-            document.getElementById('event-image').src = image;
-            document.getElementById('event-embed').src = embed;
-            document.getElementById('page-number').innerText = `Page ${currentIndex + 1} of ${events.length}`;
+            document.getElementById('title').innerText = title;
+            document.getElementById('description').innerText = description;
+            document.getElementById('image').src = image;
+            document.getElementById('embed').src = embed;
+            document.getElementById('page').innerText = `Page ${currentIndex + 1} of ${events.length}`;
+            document.getElementById('date').innerText = date;
+
 
             document.querySelectorAll('.timeline-event').forEach((eventElement, index) => {
                 eventElement.classList.toggle('active', index === currentIndex);
